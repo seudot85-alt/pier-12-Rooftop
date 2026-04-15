@@ -27,7 +27,7 @@ const Confirmacao = () => {
   const [reservation, setReservation] = useState<Reservation | null>(null);
 
   useEffect(() => {
-    if (status === "success" && sessionId) {
+    if (status === "success") {
       // Small delay to let webhook process
       setTimeout(async () => {
         const { data } = await supabase
@@ -42,6 +42,9 @@ const Confirmacao = () => {
     }
   }, [status, sessionId]);
 
+  if (!sessionId && status !== "success" && status !== "cancelled") {
+  return <div>Página não encontrada</div>;
+}
   if (status === "cancelled") {
     return (
       <div className="min-h-screen bg-background">
